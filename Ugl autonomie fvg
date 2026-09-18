@@ -1,0 +1,133 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(UglAutonomieFvgApp());
+}
+
+class UglAutonomieFvgApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'UGL Autonomie FVG',
+      theme: ThemeData(
+        // Colori UGL
+        primaryColor: const Color(0xFF003882), // Blu UGL
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF003882),
+          foregroundColor: Colors.white,
+        ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: const Color(0xFFFFC107), // Giallo/Oro UGL
+        ),
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
+  // Le 4 sezioni principali dell'app
+  final List<Widget> _pages = [
+    HomeContent(),
+    ServiziContent(),
+    ContrattiContent(),
+    TesseraContent(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('UGL Autonomie FVG', style: TextStyle(fontWeight: FontWeight.bold)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              // Qui si apriranno le notifiche (es. allerte scioperi)
+            },
+          )
+        ],
+      ),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        selectedItemColor: const Color(0xFF003882),
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.support_agent), label: 'Servizi'),
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: 'CCNL'),
+          BottomNavigationBarItem(icon: Icon(Icons.badge), label: 'Tessera'),
+        ],
+      ),
+    );
+  }
+}
+
+// --- SEZIONI CONTENUTO ---
+
+class HomeContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16.0),
+      children: [
+        const Text(
+          'Ultime Notizie FVG',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF003882)),
+        ),
+        const SizedBox(height: 10),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.article, color: Color(0xFFFFC107)),
+            title: const Text('Rinnovo RSU Regione FVG'),
+            subtitle: const Text('Scopri i candidati e le modalità di voto in regione.'),
+            onTap: () {},
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.article, color: Color(0xFFFFC107)),
+            title: const Text('Accordo Comparto Sanità FVG'),
+            subtitle: const Text('Firmata l\'ipotesi di accordo sui premi di produzione.'),
+            onTap: () {},
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ServiziContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Sportello Assistenza (CAF, Patronato, Vertenze)'));
+  }
+}
+
+class ContrattiContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Consultazione CCNL Funzioni Locali e Sanità'));
+  }
+}
+
+class TesseraContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Tessera Digitale UGL & Convenzioni FVG'));
+  }
+}
